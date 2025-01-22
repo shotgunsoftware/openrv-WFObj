@@ -20,74 +20,97 @@
 #include <WFObj/Reader.h>
 #include <fstream>
 
-extern void WFObjParse(std::istream&,WFObj::Reader*);
+extern void WFObjParse(std::istream&, WFObj::Reader*);
 
-namespace WFObj {
-using namespace std;
-
-Reader::Reader() {}
-Reader::~Reader() {}
-
-void Reader::finished() {}
-
-void Reader::v(float x,float y,float z) {}
-void Reader::v(float x,float y,float z,float w) { v(x,y,z); }
-void Reader::vt(float) {}
-void Reader::vt(float,float) {}
-void Reader::vt(float,float,float) {}
-void Reader::vn(float,float,float) {}
-void Reader::vp(float,float) {}
-void Reader::vp(float) {}
-void Reader::f(const Reader::VertexIndices&, 
-	       const Reader::NormalIndices&,
-	       const Reader::TextureIndices&) {}
-void Reader::l(const Reader::VertexIndices&,
-	       const Reader::NormalIndices&,
-	       const Reader::TextureIndices&) {}
-void Reader::p(const Reader::VertexIndices&,
-	       const Reader::NormalIndices&,
-	       const Reader::TextureIndices&) {}
-
-void Reader::newGroup(const std::string&) {}
-void Reader::activeGroups(const Reader::Strings&) {}
-void Reader::smoothingGroup(Reader::Id) {}
-void Reader::activeObject(const std::string&) {}
-void Reader::usemtl(const std::string&) {}
-void Reader::usemap(const std::string&) {}
-void Reader::mtllib(const std::string&) {}
-void Reader::maplib(const std::string&) {}
-void Reader::shadow_obj(const std::string&) {}
-void Reader::trace_obj(const std::string&) {}
-void Reader::lod(int) {}
-
-void Reader::bevel(bool) {}
-void Reader::cinterp(bool) {}
-void Reader::dinterp(bool) {}
-
-void
-Reader::parse(istream &i)
+namespace WFObj
 {
-    WFObjParse(i,this);
-    finished();
-}
+    using namespace std;
 
-bool
-Reader::parseFile(const char *filename)
-{
-    ifstream file(filename);
+    Reader::Reader() {}
 
-    if (file) 
+    Reader::~Reader() {}
+
+    void Reader::finished() {}
+
+    void Reader::v(float x, float y, float z) {}
+
+    void Reader::v(float x, float y, float z, float w) { v(x, y, z); }
+
+    void Reader::vt(float) {}
+
+    void Reader::vt(float, float) {}
+
+    void Reader::vt(float, float, float) {}
+
+    void Reader::vn(float, float, float) {}
+
+    void Reader::vp(float, float) {}
+
+    void Reader::vp(float) {}
+
+    void Reader::f(const Reader::VertexIndices&, const Reader::NormalIndices&,
+                   const Reader::TextureIndices&)
     {
-	parse(file);
-	return true;
     }
-    else
+
+    void Reader::l(const Reader::VertexIndices&, const Reader::NormalIndices&,
+                   const Reader::TextureIndices&)
     {
-	cerr << "Couldn't open the file " << filename << endl << flush;
-	return false;
     }
-}
 
+    void Reader::p(const Reader::VertexIndices&, const Reader::NormalIndices&,
+                   const Reader::TextureIndices&)
+    {
+    }
 
-} // WFObj
- 
+    void Reader::newGroup(const std::string&) {}
+
+    void Reader::activeGroups(const Reader::Strings&) {}
+
+    void Reader::smoothingGroup(Reader::Id) {}
+
+    void Reader::activeObject(const std::string&) {}
+
+    void Reader::usemtl(const std::string&) {}
+
+    void Reader::usemap(const std::string&) {}
+
+    void Reader::mtllib(const std::string&) {}
+
+    void Reader::maplib(const std::string&) {}
+
+    void Reader::shadow_obj(const std::string&) {}
+
+    void Reader::trace_obj(const std::string&) {}
+
+    void Reader::lod(int) {}
+
+    void Reader::bevel(bool) {}
+
+    void Reader::cinterp(bool) {}
+
+    void Reader::dinterp(bool) {}
+
+    void Reader::parse(istream& i)
+    {
+        WFObjParse(i, this);
+        finished();
+    }
+
+    bool Reader::parseFile(const char* filename)
+    {
+        ifstream file(filename);
+
+        if (file)
+        {
+            parse(file);
+            return true;
+        }
+        else
+        {
+            cerr << "Couldn't open the file " << filename << endl << flush;
+            return false;
+        }
+    }
+
+} // namespace WFObj

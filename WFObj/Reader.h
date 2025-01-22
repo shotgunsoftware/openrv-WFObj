@@ -18,129 +18,126 @@
 //******************************************************************************
 #ifndef __WFObj__Reader__h__
 #define __WFObj__Reader__h__
-#include <vector>
-#include <string>
 #include <iostream>
+#include <string>
+#include <vector>
 
-namespace WFObj {
-
-//
-//  The Reader class will call its own public virtual functions when
-//  its state changes during parsing. The default actions are to
-//  ignore everything.
-//
-
-class Reader
+namespace WFObj
 {
-  public:
-    Reader();
-    virtual ~Reader();
 
     //
-    //	Parse it. parseFile() returns false if it fails to open the file.
+    //  The Reader class will call its own public virtual functions when
+    //  its state changes during parsing. The default actions are to
+    //  ignore everything.
     //
 
-    virtual void parse(std::istream&i);
-    virtual bool parseFile(const char*);
+    class Reader
+    {
+    public:
+        Reader();
+        virtual ~Reader();
 
-    virtual void finished();
+        //
+        //	Parse it. parseFile() returns false if it fails to open the
+        // file.
+        //
 
-    //
-    //	types
-    //
+        virtual void parse(std::istream& i);
+        virtual bool parseFile(const char*);
 
-    typedef std::vector<int>		VertexIndices;
-    typedef std::vector<int>		NormalIndices;
-    typedef std::vector<int>		TextureIndices;
-    typedef std::vector<std::string>	Strings;
-    typedef int				Id;
-    
-    //
-    //	v? data
-    //
+        virtual void finished();
 
-    virtual void v(float,float,float);
-    virtual void v(float,float,float,float);
-    virtual void vt(float);
-    virtual void vt(float,float);
-    virtual void vt(float,float,float);
-    virtual void vn(float,float,float);
-    virtual void vp(float,float);
-    virtual void vp(float);
+        //
+        //	types
+        //
 
-    //
-    //	element data: faces / lines / points
-    //
+        typedef std::vector<int> VertexIndices;
+        typedef std::vector<int> NormalIndices;
+        typedef std::vector<int> TextureIndices;
+        typedef std::vector<std::string> Strings;
+        typedef int Id;
 
-    virtual void f(const VertexIndices&,
-		   const NormalIndices&,
-		   const TextureIndices&);
+        //
+        //	v? data
+        //
 
-    virtual void l(const VertexIndices&,
-		   const NormalIndices&,
-		   const TextureIndices&);
+        virtual void v(float, float, float);
+        virtual void v(float, float, float, float);
+        virtual void vt(float);
+        virtual void vt(float, float);
+        virtual void vt(float, float, float);
+        virtual void vn(float, float, float);
+        virtual void vp(float, float);
+        virtual void vp(float);
 
-    virtual void p(const VertexIndices&,
-		   const NormalIndices&,
-		   const TextureIndices&);
+        //
+        //	element data: faces / lines / points
+        //
 
-    //
-    //	Called when a group name is used that has not yet been seen
-    //
+        virtual void f(const VertexIndices&, const NormalIndices&,
+                       const TextureIndices&);
 
-    virtual void newGroup(const std::string&);
+        virtual void l(const VertexIndices&, const NormalIndices&,
+                       const TextureIndices&);
 
-    //
-    //	Called when active groups change
-    //
+        virtual void p(const VertexIndices&, const NormalIndices&,
+                       const TextureIndices&);
 
-    virtual void activeGroups(const Strings&);
+        //
+        //	Called when a group name is used that has not yet been seen
+        //
 
-    //
-    //	Called when an "o" line is encountered.
-    //
+        virtual void newGroup(const std::string&);
 
-    virtual void activeObject(const std::string&);
+        //
+        //	Called when active groups change
+        //
 
-    //
-    //	Called when smoothing group changes -- note that Id == 0 means
-    //	no smoothing -- this is equivalent to the "s off" statement.
-    //
+        virtual void activeGroups(const Strings&);
 
-    virtual void smoothingGroup(Id);
+        //
+        //	Called when an "o" line is encountered.
+        //
 
-    //
-    //	Bevel/cinterp/dinterp
-    //
+        virtual void activeObject(const std::string&);
 
-    virtual void bevel(bool);
-    virtual void cinterp(bool);
-    virtual void dinterp(bool);
+        //
+        //	Called when smoothing group changes -- note that Id == 0 means
+        //	no smoothing -- this is equivalent to the "s off" statement.
+        //
 
-    //
-    //	Material and map
-    //
+        virtual void smoothingGroup(Id);
 
-    virtual void mtllib(const std::string&);
-    virtual void maplib(const std::string&);
-    virtual void usemap(const std::string&);
-    virtual void usemtl(const std::string&);
+        //
+        //	Bevel/cinterp/dinterp
+        //
 
-    //
-    //	Trace/Shadow objects
+        virtual void bevel(bool);
+        virtual void cinterp(bool);
+        virtual void dinterp(bool);
 
-    virtual void trace_obj(const std::string&);
-    virtual void shadow_obj(const std::string&);
+        //
+        //	Material and map
+        //
 
-    //
-    //	Level of detail number
-    //
+        virtual void mtllib(const std::string&);
+        virtual void maplib(const std::string&);
+        virtual void usemap(const std::string&);
+        virtual void usemtl(const std::string&);
 
-    virtual void lod(int);
-};
+        //
+        //	Trace/Shadow objects
 
+        virtual void trace_obj(const std::string&);
+        virtual void shadow_obj(const std::string&);
 
-} // WFObj
+        //
+        //	Level of detail number
+        //
+
+        virtual void lod(int);
+    };
+
+} // namespace WFObj
 
 #endif // __WFObj__Reader__h__
-
